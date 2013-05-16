@@ -47,11 +47,12 @@ if ("vcolors" %in% names(args))
       }
   
   # Create Data matrix
-  data$Name[items+1] <- "results.ADI"
-  data$Name[items+2] <- "id"
-  data$Name[items+3] <- "rank"
-  tempdata <- matrix(0,nrow=items,ncol=items+2,   #+2 for results index
-        dimnames = list(data$Name[1:items],data$Name[1:(items+2)]))
+  ADI_Rownames =c(1:items+3)
+  ADI_Rownames[1:items] = as.vector(data$Name[1:items])
+  ADI_Rownames[items+1] = "results.ADI"
+  ADI_Rownames[items+2] = "id"
+  ADI_Rownames[items+3] = "rank" 
+  tempdata <- matrix(0,nrow=items,ncol=items+2, dimnames = list(ADI_Rownames[1:items],ADI_Rownames[1:(items+2)]))
   # set diagonal left/up to right/down to NA
   for (I in (1:items))
     tempdata[I,I] <- NA
@@ -64,7 +65,7 @@ if ("vcolors" %in% names(args))
    
    tempdata 
   result.data <- matrix(0,nrow=items,ncol=items+2,   #Items + ADI + RAnge
-        dimnames = list(data$Name[1:items],data$Name[1:(items+2)]))
+        dimnames = list(ADI_Rownames[1:items],ADI_Rownames[1:(items+2)]))
   data$Name[items+1] <- ""
   # matrix[down,right] 
   for (column in (1:items))

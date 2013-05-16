@@ -77,12 +77,14 @@ Knut Krueger
 dataM=data.frame  ("action.from"=c(1,2,3,4,5,1,1,1,1,1,1,1,1,3,4),
                    "action.to"=  c(2,3,4,5,6,2,3,4,5,6,3,4,3,4,3),
                    "kind.of.action"= c(4,1,1,4,3,4,3,4,3,4,3,4,3,4,3),
-                   "Time"=c("03:15:00","03:17:30","03:20:00","03:20:30","03:21:00","03:21:30","03:22:00","03:22:30","03:23:00","03:23:30","03:25:00","03:25:30","03:26:00","03:26:30","03:27:00"),stringsAsFactors=FALSE)
-
+                   "Time"=c("03:15:00","03:17:30","03:20:00","03:20:30","03:21:00","03:21:30",
+                            "03:22:00","03:22:30","03:23:00","03:23:30","03:25:00","03:25:30",
+                            "03:26:00","03:26:30","03:27:00"),stringsAsFactors=FALSE)
 
 items= data.frame ("Name"=c("item1","item2","item3","item4","item5","item6") ,
                    "item.number"=c(1:6),stringsAsFactors=FALSE)
-actions=data.frame("name.of.action"= c("leading","following","approach","bite","threat to bite", "kick","threat to kick", "chase","retreat"),
+actions=data.frame("name.of.action"= c("leading","following","approach","bite","threat to bite", 
+                   "kick","threat to kick", "chase","retreat"),
                    "action.number"=c(1:9),
                    "classification"=c(1,2,1,1,1,1,1,1,2) ,
                    "weighting"=c(1,-1,1,1,1,1,1,1,-1),stringsAsFactors=FALSE)

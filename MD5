@@ -1,6 +1,6 @@
-af851dba0664383960d2175ebdc64eff *DESCRIPTION
+3c62d087b81d40efc64ad1a1abde2ec2 *DESCRIPTION
 df390c53434517b304ac5db487184641 *NAMESPACE
-699f63ed07555332f765445f79761e3c *R/ADI.R
+00535de18c3901f0d0b565c4dd68f19b *R/ADI.R
 6999be801927ef096103869dd7343825 *R/detect_bits.R
 e275862e13ce4a3c74132190c392b0d5 *R/music_notation.r
 32c7cff4d78d965d2436fd1a0fbd06f8 *R/search.win.lose.R
@@ -9,13 +9,13 @@ de6970417f4101180b53af3059c2aef0 *data/data_ADI.rda
 e9d1485fb1881dccbf3827d4941979a2 *data/data_Musicnotation.rda
 9f659318afd37fa116ea8aa685b8233d *data/data_Network_1.rda
 e58e8ca2b79f7fb9a1f06ab0dbfc7c04 *data/data_Network_2.rda
-3d054fd0df175c15c1d4f377dae0e246 *man/ADI.Rd
+f0d1e0eae036009d28ddd905f0222558 *man/ADI.Rd
 816d457c6f37dcab0f1df4c52448bb73 *man/data_ADI.Rd
 79b46c93c3f3e7a3206598834cf5b9d0 *man/data_Musicnotation.Rd
 a6ff559fae38e1bc2e65c34ccf39ade2 *man/data_Network_1.Rd
 87c0e25ee34e8a96037883ed38ad28ac *man/data_Network_2.Rd
 b92f547282c5aec3e251edb933e834df *man/detect_bits-internal.Rd
 940ea1f523b708b53408fd98b6e95116 *man/dominance-package.rd
-c2c8eed2f5bb50c68bf016e9fc366895 *man/musicnotation.Rd
+1568665fe7920cf1b2225846b419155c *man/musicnotation.Rd
 b7ba18c25e5b1d440993a2e326923095 *man/search.win.lose-internal.Rd
-055110b4e8bbff6e1cf6f00bec70bafa *man/sociogram.Rd
+9a9886b9146cd9104be620fc7789afdb *man/sociogram.Rd
