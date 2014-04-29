@@ -4,11 +4,11 @@
 \title{Music Notation Graph}
 \description{computes Music Notatation graphs}
 \usage{
-Musicnotation(data, ...)
+Musicnotation(data_sheet, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{data}{
+  \item{data_sheet}{
 either a data.frame f.e imported from a data sheet containing\cr  
                                 "Name","item.number"\cr 
                                 "action.from.","action.to","kind.of.action"\cr
@@ -93,11 +93,11 @@ bytes= "001111111"
 ## set colors for special encounters
 color= c("green","green","red","red","red","red","red","red")    
 
-Musicnotation(data=dataM,actions=actions,items=items,sort_dominance=TRUE)
+Musicnotation(data_sheet=dataM,actions=actions,items=items,sort_dominance=TRUE)
 ## or you can use a complete f.e Excel sheet
 ## you can save this data as basic excel sheet to work with
 data(data_Musicnotation)
-Musicnotation(data=data_Musicnotation,sort_dominance=TRUE)
+Musicnotation(data_sheet=data_Musicnotation,sort_dominance=TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

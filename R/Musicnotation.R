@@ -1,24 +1,5 @@
-# call 
-# data see excel style sheet
-# colors ....
-# lwd: line width if lwd_arrows is not used also for line width arrows
-# show_items: items to be shown - show_items="0" all items will be shown
-# angel_arrows=20,
-# length_arrows=0.05, 
-# lwd_arrows =1     line width arrows
-# actions="??????" as long as ctions are present in data sheet: actions to be shonw
-# action_colors  colors for actions
-# starting_time , ending_time extract special section
-# sort_dominace if sort_dominance is present
-#bytes= "000000001"  # retreat
-#bytes= "100000000"  # leading
-#bytes= "010000000"  # following
-#bytes= "001000000"  # approach
-#bytes= "000111110"  # all aggressive encounters
-#bytes= "111111111"  # all  encounters
-#bytes= "001111111"  # all  encounters without leading and followong
-# color_horse show separate horses colored, use show_items=1 for horse to be colored
-Musicnotation <- function(data, ...)
+Musicnotation <-
+function(data_sheet, ...)
 {
  args = list(...)
 # as we build the package for reading a complete excel sheet we must build one data.frame to compute singel frames
@@ -28,16 +9,16 @@ if (("actions" %in% names(args)) &  ("items" %in% names(args)))
   actions <- args$actions
   items <- args$items   
 
-  data_length = length(data$action.from)
+  data_length = length(data_sheet$action.from)
   temp_NA= c(1:data_length)
   temp_NA[1:data_length] =NA
   tempString_NA= c(1:data_length)
   tempString_NA[1:data_length] = "<NA>"
 
-  data_temp=data.frame("action.from"=data$action.from,
-                       "action.to"=data$action.to,
-                       "kind.of.action"=data$kind.of.action,
-                       "Time"=data$Time,
+  data_temp=data.frame("action.from"=data_sheet$action.from,
+                       "action.to"=data_sheet$action.to,
+                       "kind.of.action"=data_sheet$kind.of.action,
+                       "Time"=data_sheet$Time,
                        "Name"=tempString_NA,
                        "item.number"=temp_NA,
                        "dominance.order"=temp_NA,
@@ -54,12 +35,12 @@ if (("actions" %in% names(args)) &  ("items" %in% names(args)))
   data_temp$classification[1:length(actions$classification)] = actions$classification
   data_temp$weighting[1:length(actions$weighting)] = actions$weighting
 
-  data = data_temp  # compute with the complete frame
+  data_sheet = data_temp  # compute with the complete frame
 
 }
-if (length(grep('-', data$Time[1]))>0) # time format   comes as "1899-12-31 10:00:00 UTC" when imported by readWorksheet(
+if (length(grep('-', data_sheet$Time[1]))>0) # time format   comes as "1899-12-31 10:00:00 UTC" when imported by readWorksheet(
 {
-data$Time=format(data$Time, "%H:%M:%S")
+data_sheet$Time=format(data_sheet$Time, "%H:%M:%S")
 }
 
 # ---------------------------------
@@ -72,13 +53,13 @@ data$Time=format(data$Time, "%H:%M:%S")
 
   max_items<- 0
   min_items<- 0   #TODO for What are they ??
-	max_items <- max(data$action.from,na.rm=TRUE)
-	count_max <- length(data$action.from)
-	if (max_items < max(data$action.to,na.rm=TRUE))
-		max_items <- max(data$action.to,na.rm=TRUE)
-      if (max(data$item.number,na.rm=TRUE) < max_items)
+	max_items <- max(data_sheet$action.from,na.rm=TRUE)
+	count_max <- length(data_sheet$action.from)
+	if (max_items < max(data_sheet$action.to,na.rm=TRUE))
+		max_items <- max(data_sheet$action.to,na.rm=TRUE)
+      if (max(data_sheet$item.number,na.rm=TRUE) < max_items)
 	{
-		print(paste("Error max count of items: ",max(data$action.from),   " does not match max Items: ", ,max(data$item.number,na.rm=TRUE)))
+		print(paste("Error max count of items: ",max(data_sheet$action.from),   " does not match max Items: ", ,max(data_sheet$item.number,na.rm=TRUE)))
 	      break;                                                   
   }
 if ("sort_dominance" %in% names(args))
@@ -97,14 +78,14 @@ else
  lwd=1 
  }
 
- name.of.action  <- c(1:max(data$action.number,na.rm=TRUE))
+ name.of.action  <- c(1:max(data_sheet$action.number,na.rm=TRUE))
 if ("bytes" %in% names(args))
 {
  bytes <- args$bytes  
  } 
 else
 {
-  bytes = c(1:max(data$action.number,na.rm=TRUE))
+  bytes = c(1:max(data_sheet$action.number,na.rm=TRUE))
   bytes[1:length(bytes)]=1
   bytes = toString(bytes)
   bytes= gsub("[,]", "", bytes)
@@ -149,7 +130,7 @@ else
   }
   else
   {
-   show_items=c(1:max(data$item.number,na.rm=TRUE))
+   show_items=c(1:max(data_sheet$item.number,na.rm=TRUE))
    show_items[1:length(show_items)]=1
    show_items = toString(show_items)
    show_items= gsub("[,]", "", show_items)
@@ -161,17 +142,17 @@ else
 
 
 
-max_items <-  max(data$item.number,na.rm=TRUE)       # because some items may not be used in actions
+max_items <-  max(data_sheet$item.number,na.rm=TRUE)       # because some items may not be used in actions
 # ----------- end checking number of used does not exeed max_items.
 # -----------   defining colors  ----------------------------------
        
 if ("action_colors" %in% names(args))
 { 
-  		max_actions <- max(data$action.number,na.rm=TRUE)
+  		max_actions <- max(data_sheet$action.number,na.rm=TRUE)
   		if (length(args$action_colors) != max_actions)
   		{	
 
-   		print(paste("Error max count of action.number: ", max(data$action.number,na.rm=TRUE)," does not max colors: ",length(args$action_colors)))
+   		print(paste("Error max count of action.number: ", max(data_sheet$action.number,na.rm=TRUE)," does not max colors: ",length(args$action_colors)))
   		      break;
   	 	} # if
      action_color <- args$action_colors
@@ -268,7 +249,7 @@ if ("starting_time" %in% names(args))
   { count_min <- 1
   for (counter in (1:count_max))
     {
-     if (times(args$starting_time) >= times(data$Time[counter]))
+     if (times(args$starting_time) >= times(data_sheet$Time[counter]))
      count_min <- counter
     }
     if (count_min == 1)  
@@ -278,14 +259,14 @@ if ("starting_time" %in% names(args))
 else  	
   {
      	count_min <- 1
-    	min_time <- min(times(data$Time),na.rm=TRUE)
+    	min_time <- min(times(data_sheet$Time),na.rm=TRUE)
 	}
 
 if ("ending_time" %in% names(args))
   {count_max_temp <- count_max	
    for (counter in (1:count_max))
     {
-     if (times(args$ending_time) <= times(data$Time[counter]))
+     if (times(args$ending_time) <= times(data_sheet$Time[counter]))
      count_max_temp <- counter
     }
     if (count_max_temp == count_max)  
@@ -294,14 +275,14 @@ if ("ending_time" %in% names(args))
     max_time <- times(args$ending_time)
    } 
 else  	
-	max_time <- max(times(data$Time),na.rm=TRUE)
+	max_time <- max(times(data_sheet$Time),na.rm=TRUE)
 
 #-------------- end defining data for special section --------------------------
 # ----------- sort: highest point count on top ----------------------
-#result$item.number <- data$dominance.order
-    data.dominance.order.save <-data$dominance.order
-    ADI_temp = ADI(data, bytes=bytes)
-    items <- max(data$item.number,na.rm=TRUE)
+#result$item.number <- data_sheet$dominance.order
+    data.dominance.order.save <-data_sheet$dominance.order
+    ADI_temp = ADI(data_sheet, bytes=bytes)
+    items <- max(data_sheet$item.number,na.rm=TRUE)
     points_items <- data.frame(name=c(1:items ),item.number=c(1:items ),dominance.points=c(1:items),item.order=c(1:items))
     temp<-as.data.frame(ADI_temp$ADI ) #only ADI form Results
 ########
@@ -310,15 +291,15 @@ else
     points_items$item.number <- temp$id 
     points_items$item.order  <- temp$rank
 ############    
-    name.of.action  <- c(1:max(data$action.number,na.rm=TRUE))
-    action.number   <- c(1:max(data$action.number,na.rm=TRUE))
-    classification  <- c(1:max(data$action.number,na.rm=TRUE))
-    weighting       <- c(1:max(data$action.number,na.rm=TRUE))
+    name.of.action  <- c(1:max(data_sheet$action.number,na.rm=TRUE))
+    action.number   <- c(1:max(data_sheet$action.number,na.rm=TRUE))
+    classification  <- c(1:max(data_sheet$action.number,na.rm=TRUE))
+    weighting       <- c(1:max(data_sheet$action.number,na.rm=TRUE))
 #    points_sorted<- points_items[order(points_items$dominance.points,decreasing = FALSE),]
     result=points_items
 
 #    for (i in (items:1)) 
-     	data$dominance.order[1:max_items] <-result$item.number
+     	data_sheet$dominance.order[1:max_items] <-result$item.number
        if (sort_dominance ==FALSE)
      		result <- result[order(result$item.number,decreasing = FALSE),] #sort for display 
 
@@ -361,41 +342,37 @@ else
 
 	for (counter in (count_min:count_max))
 	{
-	  if  ((data$action.from[counter] > 0 ) & data$kind.of.action[counter] >0)
-		if (match(result$item.number[data$action.from[counter]],bits_equal_one,nomatch=0)> 0)
+	  if  ((data_sheet$action.from[counter] > 0 ) & data_sheet$kind.of.action[counter] >0)
+		if (match(result$item.number[data_sheet$action.from[counter]],bits_equal_one,nomatch=0)> 0)
 		{ # show only items when bit is set to one - all show_items are set to one above if show_items is not set in function call      
 		
-       if (match(data$kind.of.action[counter],bits_action_equal_1 <- detect_1,nomatch=0)> 0)
+       if (match(data_sheet$kind.of.action[counter],bits_action_equal_1 <- detect_1,nomatch=0)> 0)
          {
         if ("color_bits" %in% names(args))  # disply only special horses colored
-        { if (match(result$item.number[data$action.from[counter]],bits_equal_one_color,nomatch=0)> 0)
-      	     action_cl <- cl[data$action.from[counter]]
+        { if (match(result$item.number[data_sheet$action.from[counter]],bits_equal_one_color,nomatch=0)> 0)
+      	     action_cl <- cl[data_sheet$action.from[counter]]
       	     else
       	     action_cl ="black"
       	}     
       	else 
       	{
           if (change_action_color != FALSE)
-            action_cl <- action_color[data$kind.of.action[counter]]
+            action_cl <- action_color[data_sheet$kind.of.action[counter]]
             else      	       
-          	action_cl <- cl[data$kind.of.action[counter]]
+          	action_cl <- cl[data_sheet$kind.of.action[counter]]
          }
-      			x1 <- times(data$Time[counter])	
-      			x2 <- times(data$Time[counter])	
+      			x1 <- times(data_sheet$Time[counter])	
+      			x2 <- times(data_sheet$Time[counter])	
 
-      	 		y1 <- result$item.number[result$item.number[data$action.to[counter]]]
-      			y2 <- result$item.number[result$item.number[data$action.from[counter]]]
+      	 		y1 <- result$item.number[result$item.number[data_sheet$action.to[counter]]]
+      			y2 <- result$item.number[result$item.number[data_sheet$action.from[counter]]]
 
     		  	arrows(x1,y1,x2,y2,length=length_a,angle=angel_a,
       	   		code=1,col=action_cl,lty = par("lty"),lwd=lwda)
-	   	   }  #(match(data$kind.of.action[counter],bits_action_equal_1 <- detect_1,nomatch=0)> 0)
+	   	   }  #(match(data_sheet$kind.of.action[counter],bits_action_equal_1 <- detect_1,nomatch=0)> 0)
        
 		}
 	}#for (counter in (1:count_max))
  return(ADI_temp)#from function rank_order
 
-}#function 
-
-
-#------------------------------------------- end music notation -------------------------------------------------
-
+}

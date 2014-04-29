@@ -1,7 +1,7 @@
 Sociogram <-
-function(data,bits,...)
+function(data_sheet,bits,...)
 {
-library(igraph)
+#library(igraph)
 #--------------------- übergabe parameter ----------
 args = list(...)
 
@@ -12,13 +12,13 @@ if (("actions" %in% names(args)) &  ("items" %in% names(args)))
   actions <- args$actions
   items <- args$items   
 
-  data_length = length(data$action.from)
+  data_length = length(data_sheet$action.from)
   temp_NA= c(1:data_length)
   temp_NA[1:data_length] =NA
   tempString_NA= c(1:data_length)
   tempString_NA[1:data_length] = "<NA>"
 
-  data_temp=data.frame("action.from"=data$action.from,"action.to"=data$action.to,"kind.of.action"=data$kind.of.action,
+  data_temp=data.frame("action.from"=data_sheet$action.from,"action.to"=data_sheet$action.to,"kind.of.action"=data_sheet$kind.of.action,
                       "Name"=tempString_NA,"item.number"=temp_NA,
                       "name.of.action"=tempString_NA,
                       "action.number"=temp_NA,
@@ -32,11 +32,11 @@ if (("actions" %in% names(args)) &  ("items" %in% names(args)))
   data_temp$classification[1:length(actions$classification)] = actions$classification
   data_temp$weighting[1:length(actions$weighting)] = actions$weighting
 
-  data = data_temp  # compute with the complete frame
+  data_sheet = data_temp  # compute with the complete frame
 
 }
 
-data_Items_g2=data
+data_Items_g2=data_sheet
 Group= with_groups
 bytes= bits  
 

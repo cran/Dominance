@@ -4,11 +4,11 @@
 \title{Average Dominance Index}
 \description{computes the Average Dominance Index}
 \usage{
-ADI(data, bytes, ...)
+ADI(data_sheet, bytes, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{data}{
+  \item{data_sheet}{
   either a data.frame f.e imported from a data sheet containing\cr  
                                 "Name","item.number"\cr 
                                 "action.from.","action.to","kind.of.action"\cr
@@ -70,9 +70,9 @@ On using the DomWorld model to evaluate dominance ranking methods , de Vries, Ha
 %%}
 \examples{
 ## you can eihter use:
-data=data.frame   ("action.from"=c(1,4,2,3,4,3,4,3,4,3,4,3,4,3,4),
-                   "action.to"=c(4,1,1,4,3,4,3,4,3,4,3,4,3,4,3),
-                   "kind.of.action"= c(4,1,1,4,3,4,3,4,3,4,3,4,3,4,3),stringsAsFactors=FALSE)
+data_sheet=data.frame   ("action.from"=c(1,4,2,3,4,3,4,3,4,3,4,3,4,3,4),
+                         "action.to"=c(4,1,1,4,3,4,3,4,3,4,3,4,3,4,3),
+                         "kind.of.action"= c(4,1,1,4,3,4,3,4,3,4,3,4,3,4,3),stringsAsFactors=FALSE)
 items= data.frame ("Name"=c("item1","item2","item3","item4","item5","item6") ,
                    "item.number"=c(1:6),stringsAsFactors=FALSE)
 actions=data.frame("name.of.action"= c("leading","following","approach","bite","threat to bite",
@@ -82,7 +82,7 @@ actions=data.frame("name.of.action"= c("leading","following","approach","bite","
                    "weighting"=c(1,-1,1,1,1,1,1,1,-1),stringsAsFactors=FALSE)
 ## all  encounters  without leading and following
 bytes= "001111111"  
-ADI(data,items=items,actions=actions,bytes)
+ADI(data_sheet,items=items,actions=actions,bytes)
 ## or you can use a complete f.e Excel sheet
 ## you can save this data as basic excel sheet to work with
 data(data_ADI)

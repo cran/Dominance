@@ -1,5 +1,5 @@
 ADI <-
-function(data,bytes,...)
+function(data_sheet,bytes,...)
 {
 #--------------------- übergabe parameter ----------
 args = list(...)
@@ -9,13 +9,13 @@ if (("actions" %in% names(args)) &  ("items" %in% names(args)))
 { 
   actions <- args$actions
   items <- args$items   
-  data_length = length(data$action.from)
+  data_length = length(data_sheet$action.from)
   tempNA= c(1:data_length)
   tempNA[1:data_length] =NA
   tempString_NA= c(1:data_length)
   tempString_NA[1:data_length] = "<NA>"
 
-  data_temp=data.frame("action.from"=data$action.from,"action.to"=data$action.to,"kind.of.action"=data$kind.of.action,
+  data_temp=data.frame("action.from"=data_sheet$action.from,"action.to"=data_sheet$action.to,"kind.of.action"=data_sheet$kind.of.action,
                       "Name"=tempString_NA,"item.number"=tempNA,
                       "name.of.action"=tempString_NA,
                       "action.number"=tempNA,
@@ -29,10 +29,10 @@ if (("actions" %in% names(args)) &  ("items" %in% names(args)))
   data_temp$classification[1:length(actions$classification)] = actions$classification
   data_temp$weighting[1:length(actions$weighting)] = actions$weighting
 
-  data = data_temp  # compute with the complete frame
+  data_sheet = data_temp  # compute with the complete frame
 
 }
-results <- search.win.lose(data,bits=bytes)
+results <- search.win.lose(data_sheet,bits=bytes)
 win_lose_results <- results$data.win.lose
 items <- results$items    
 
@@ -40,7 +40,7 @@ if ("vcolors" %in% names(args))
     vcolors <- args$vcolors
     else
     vcolors <-""
- if (max(data$item.number,na.rm=TRUE) < length(vcolors))
+ if (max(data_sheet$item.number,na.rm=TRUE) < length(vcolors))
            {
                     print("Error max count of colors does not match")
               break;
@@ -48,7 +48,7 @@ if ("vcolors" %in% names(args))
   
   # Create Data matrix
   ADI_Rownames =c(1:items+3)
-  ADI_Rownames[1:items] = as.vector(data$Name[1:items])
+  ADI_Rownames[1:items] = as.vector(data_sheet$Name[1:items])
   ADI_Rownames[items+1] = "results.ADI"
   ADI_Rownames[items+2] = "id"
   ADI_Rownames[items+3] = "rank" 
@@ -66,7 +66,7 @@ if ("vcolors" %in% names(args))
    tempdata 
   result.data <- matrix(0,nrow=items,ncol=items+2,   #Items + ADI + RAnge
         dimnames = list(ADI_Rownames[1:items],ADI_Rownames[1:(items+2)]))
-  data$Name[items+1] <- ""
+
   # matrix[down,right] 
   for (column in (1:items))
     result.data[column,column] <- NA
@@ -125,7 +125,7 @@ test2[,items+3]= test2[,items+3]= data.frame("rank"=position)
 result.data <- as.matrix(test2)
 #--------------------------- end sort matrix    -----------
 
-#     result.data <- result.data[order(result.data$results.ADI) , ] 
+#     result.data <- result.data[order(result.data_sheet$results.ADI) , ] 
 #----------------------------------------------------------------------
    return(list("ADI"=result.data,"Colors"=vcolors2,"ADI_count_matrix"=tempdata[,1:items]))
 

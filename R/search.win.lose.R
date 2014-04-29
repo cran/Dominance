@@ -1,5 +1,5 @@
 search.win.lose <-
-function(data, ...)
+function(data_sheet, ...)
 {
     args = list(...)
 
@@ -16,21 +16,21 @@ if ("count_all" %in% names(args))
  
      win_lose<-integer()
      max_items<- 0
-	   max_items <- max(data$action.from,na.rm=TRUE)
-	   count_max <- length(data$action.from)
-	   if (max_items < max(data$action.to,na.rm=TRUE))
-		    max_items <- max(data$action.to,na.rm=TRUE)
-    if (max(data$item.number,na.rm=TRUE) < max_items)
+	   max_items <- max(data_sheet$action.from,na.rm=TRUE)
+	   count_max <- length(data_sheet$action.from)
+	   if (max_items < max(data_sheet$action.to,na.rm=TRUE))
+		    max_items <- max(data_sheet$action.to,na.rm=TRUE)
+    if (max(data_sheet$item.number,na.rm=TRUE) < max_items)
 	   {
 		    print("Error max count of items does not match")
 	      break;
       }
-    max_items <-  max(data$item.number,na.rm=TRUE)       # because some items may not be used in actions
+    max_items <-  max(data_sheet$item.number,na.rm=TRUE)       # because some items may not be used in actions
 
  # ------------------ checking whether bits is in a proper format
 	if (bits != "0")
 	{ 	
- 	   max_actions <- max(data$action.number,na.rm=TRUE)
+ 	   max_actions <- max(data_sheet$action.number,na.rm=TRUE)
 
 		detect_0 <- detect_bits(bits,FALSE)
 		detect_1 <- detect_bits(bits,TRUE)
@@ -49,29 +49,29 @@ if ("count_all" %in% names(args))
 
 if ("weighting" %in% names(args))
     {
-      if (length(args$weighting) != max(data$action.number,na.rm=TRUE))
+      if (length(args$weighting) != max(data_sheet$action.number,na.rm=TRUE))
        { 
-        print(" length(weigting) !=  max(data$action.number)")
+        print(" length(weigting) !=  max(data_sheet$action.number)")
         break;
         } 
        weighting_internal <- args$weighting
      } else  
-       weighting_internal <- data$weighting      
+       weighting_internal <- data_sheet$weighting      
 # -------- end checking whether bits is in a proper format
 
         temp_win <- integer()
         temp_lose <- integer()
 
-            Data_temp = data.frame ("action.from"=data$action.from,"action.to"=data$action.to,"kind.of.action"=data$kind.of.action) #build an tem data frame to prevent missing dat in line 0 to max (actions)
-            Data_temp = subset(Data_temp,data$action.from > 0 & data$action.to > 0 )  #delete all sctions from and to 0
+            Data_temp = data.frame ("action.from"=data_sheet$action.from,"action.to"=data_sheet$action.to,"kind.of.action"=data_sheet$kind.of.action) #build an tem data frame to prevent missing dat in line 0 to max (actions)
+            Data_temp = subset(Data_temp,data_sheet$action.from > 0 & data_sheet$action.to > 0 )  #delete all sctions from and to 0
             Data_temp = subset(Data_temp,match(Data_temp$kind.of.action,detect_1,nomatch=0)> 0 )  #delete all not with bytes set actions
-            for (x in 1:max(data$action.number,na.rm=TRUE) )
+            for (x in 1:max(data_sheet$action.number,na.rm=TRUE) )
             {  
            #  print(x)
 
-             if (data$classification[x] ==2)
+             if (data_sheet$classification[x] ==2)
              {
-              temp <- subset(Data_temp$action.from, x == Data_temp$kind.of.action & data$classification[x] ==2 )
+              temp <- subset(Data_temp$action.from, x == Data_temp$kind.of.action & data_sheet$classification[x] ==2 )
               if ((length(temp) > 0))  
               {
 #                print("A")
@@ -79,7 +79,7 @@ if ("weighting" %in% names(args))
 #                print(data$win)
                 temp_win   <-  append(temp_win,temp)
               }
-              temp <- subset(Data_temp$action.to,  x == Data_temp$kind.of.action & data$classification[x] ==2  )              
+              temp <- subset(Data_temp$action.to,  x == Data_temp$kind.of.action & data_sheet$classification[x] ==2  )              
               if ((length(temp) > 0))  
               {
 #                print("B")
@@ -89,9 +89,9 @@ if ("weighting" %in% names(args))
               }
              } 
              
-             if (data$classification[x] ==1)
+             if (data_sheet$classification[x] ==1)
              {
-              temp <- subset(Data_temp$action.from, x == Data_temp$kind.of.action & data$classification[x] ==1 )
+              temp <- subset(Data_temp$action.from, x == Data_temp$kind.of.action & data_sheet$classification[x] ==1 )
               if ((length(temp) > 0))
               {
  #               print("C")
@@ -101,7 +101,7 @@ if ("weighting" %in% names(args))
                  rm(temp)
              }
 
-              temp <- subset(Data_temp$action.to,  x == Data_temp$kind.of.action & data$classification[x] ==1  )              
+              temp <- subset(Data_temp$action.to,  x == Data_temp$kind.of.action & data_sheet$classification[x] ==1  )              
               if ((length(temp) > 0))
               {
  #               print("D")
@@ -112,10 +112,10 @@ if ("weighting" %in% names(args))
               }  
              } 
 
-             if (data$classification[x] > 2)
+             if (data_sheet$classification[x] > 2)
              break("error  Data_temp$classification > 2 not defined")
             } #  for (x in 1:max(Data_temp$action.number,na.rm=TRUE) )          
                                           
       win_lose <- data.frame("wins"=temp_lose,"loses"=temp_win)
-      return(list(original=data,data.win.lose=win_lose,items=max_items))
+      return(list(original=data_sheet,data.win.lose=win_lose,items=max_items))
 }

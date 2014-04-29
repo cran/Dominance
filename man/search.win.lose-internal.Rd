@@ -8,12 +8,12 @@ for internal use only
 counts the wins and loses
 }
 \usage{
-search.win.lose(data, ...)
+search.win.lose(data_sheet, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{data}{
-%%     ~~Describe \code{data} here~~
+  \item{data_sheet}{
+%%     ~~Describe \code{data_sheet} here~~
 }
   \item{\dots}{
 %%     ~~Describe \code{\dots} here~~
@@ -24,8 +24,8 @@ Knut Krueger
 }
 \examples{
 %%---- Should be DIRECTLY executable !! ----
-%%-- ==>  Define data, use random,
-%%--	or do  help(data=index)  for the standard data sets.
+%%-- ==>  Define data_sheet, use random,
+%%--	or do  help(data_sheet=index)  for the standard data sets.
 print('for internal use only')
 %% The function is currently defined as
 }

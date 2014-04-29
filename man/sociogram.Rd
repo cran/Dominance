@@ -8,11 +8,11 @@ Social Network Graphs
 computes social network graphs with igraph
 }
 \usage{
-Sociogram(data, bits, ...)
+Sociogram(data_sheet, bits, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{data}{
+  \item{data_sheet}{
 either a data.frame f.e imported from a data sheet containing
  
                                 "Name","item.number"
@@ -27,7 +27,7 @@ or only "action.from.","action.to","kind.of.action"if exists actions and items
 
 
  
-data: with "action.from.","action.to","kind.of.action"
+data_sheet: with "action.from.","action.to","kind.of.action"
 
 items  with "Name","item.number" 
 }
@@ -87,7 +87,7 @@ Knut Krueger
 
 
 ## you can eihter use:
-data=data.frame   ("action.from"=c(1,4,2,3,4,3,4,3,4,3,4,3,4,3,4),
+data_sheet=data.frame   ("action.from"=c(1,4,2,3,4,3,4,3,4,3,4,3,4,3,4),
                    "action.to"=c(4,1,1,4,3,4,3,4,3,4,3,4,3,4,3),
                    "kind.of.action"= c(4,1,1,4,3,4,3,4,3,4,3,4,3,4,3),stringsAsFactors=FALSE)
 items= data.frame ("Name"=c("item1","item2","item3","item4","item5","item6") ,
@@ -99,7 +99,7 @@ actions=data.frame("name.of.action"= c("leading","following","approach","bite","
                    "weighting"=c(1,-1,1,1,1,1,1,1,-1),stringsAsFactors=FALSE)
 ## all  encounters  without leading and following
 bytes= "001111111"  
-Sociogram(data,items=items,actions=actions,bytes)
+Sociogram(data_sheet,items=items,actions=actions,bytes)
 ## mor you can use a complete f.e Excel sheet
 ## you can save this data as basic excel sheet to work with
 data(data_Network_1)
