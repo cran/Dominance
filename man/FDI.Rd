@@ -1,10 +1,10 @@
-\name{ADI}
-\alias{ADI}
+\name{FDI}
+\alias{FDI}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Average Dominance Index}
+\title{!!!!!        ADI Manual TODO Change it to FDI}
 \description{computes the Average Dominance Index}
 \usage{
-ADI(data_sheet, bytes, ...)
+FDI(data_sheet, bytes, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -26,18 +26,18 @@ ADI(data_sheet, bytes, ...)
  \item{...}{
   dots :  actions with "name.of.action","action.number","classification","weighting"\cr   
    \cr 
-   Classification 1 if "action.from"" wins; Classification 2 if "action.to" wins \cr
+    Classification 1 if "action.from"" wins; Classification 2 if "action.to" wins \cr
    \cr 
    Weigting the factor which should be used to calculate the behavior (1 for "action.from"" wins -1 for "action.to" wins")\cr
    \cr 
    Setting a behaviour to 2 means it is count double\cr
    \cr 
-   vcolors as much colors as items, colors will returned as sorted ADI colors means color 1 = item rank 1, color 2 = item rank 2, and so on\cr
+  vcolors as much colors as items, colors will returned as sorted FDI colors means color 1 = item rank 1, color 2 = item rank 2, and so on\cr
    \cr 
   workbook :  the XlConnect Workbook for the Excel file to be changed\cr 
   note: The workbook must be opened before \cr
    \cr 
-   sheet: the sheet name ( ADI will be added to be sure not to delete any data\cr
+   sheet: the sheet name ( FDI will be added to be sure not to delete any data\cr
    \cr 
    savecounts: save also the counts of actions as sheet (availalbe only with workbook\cr
    \cr 
@@ -48,21 +48,14 @@ ADI(data_sheet, bytes, ...)
 %%  ~~ If necessary, more details than the description above ~~
 %%}
 \value{
-ADI returns a list with\cr
-ADI - the Average Dominance index\cr
-Colors - the colors supported by vcolors sorted by ADI of the items\cr
-ADI_count_matrix - the counts from which the ADI was calulated\cr
+FDI returns a list with\cr
+FDI - the Average Dominance index\cr
+Colors - the colors supported by vcolors sorted by FDI of the items\cr
+FDI_count_matrix - the counts from which the FDI was calulated\cr
 }
 \references{
 
-The Construction of Dominance Order: Comparing Performance of Five Methods Using an Individual-Based Model C. K. Hemelrijk, J. Wantia and L. Gygax, Behaviour Vol. 142, No. 8 (Aug., 2005), pp. 1037-1058
-
-\url{http://www.jstor.org/stable/4536286}
-
-
-On using the DomWorld model to evaluate dominance ranking methods , de Vries, Han,  Behaviour, Volume 146, Number 6, 2009 , pp. 843-869(27)
-
-\url{http://dx.doi.org/10.1163/156853909X412241}
+TODO
 }
 \author{
  Knut Krueger, Prof. Dr. Konstanze Krueger
@@ -82,19 +75,19 @@ data_sheet=data.frame   ("action.from"=c(1,4,2,3,4,3,4,3,4,3,4,3,4,3,4),
                          "kind.of.action"= c(4,1,1,4,3,4,3,4,3,4,3,4,3,4,3),stringsAsFactors=FALSE)
 items= data.frame ("Name"=c("item1","item2","item3","item4","item5","item6") ,
                    "item.number"=c(1:6),stringsAsFactors=FALSE)
-actions=data.frame("name.of.action"= c("leading","following","approach","bite","threat to bite",
+actions=data.frame("name.of.action"= c("leFDIng","following","approach","bite","threat to bite",
                    "kick","threat to kick", "chase","retreat"),
                    "action.number"=c(1:9),
                    "classification"=c(1,2,1,1,1,1,1,1,2) ,
                    "weighting"=c(1,-1,1,1,1,1,1,1,-1),stringsAsFactors=FALSE)
-## all  encounters  without leading and following
+## all  encounters  without leFDIng and following
 bytes= "001111111"  
-ADI(data_sheet,items=items,actions=actions,bytes)
+FDI(data_sheet,items=items,actions=actions,bytes)
 ## or you can use a complete f.e Excel sheet
 ## you can save this data as basic excel sheet to work with
 data(data_ADI)
 bytes= "001111111"  
-ADI(data_ADI,bytes)
+FDI(data_ADI,bytes)
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

@@ -1,8 +1,41 @@
+#TODO Check Excel file einbauen
+#TODO Check and eleminate NA items
 ADI <-
 function(data_sheet,bytes,...)
 {
-#--------------------- übergabe parameter ----------
+#--------------------- ?bergabe parameter ----------
 args = list(...)
+
+if ("workbook" %in% names(args)){
+  wb <- args$workbook
+}
+
+
+if ("sheet" %in% names(args)) {
+  sheet_new <- paste(args$sheet, "ADI",sep="-")
+  sheet_new_counts <- paste(args$sheet, "counts",sep="-")
+}
+
+if ("savecounts" %in% names(args)){
+  savecounts <- args$savecounts
+  if ((savecounts != TRUE) && (savecounts != FALSE)){
+    warning("Error: savecounts must be TRUE or FALSE, default FALSE")
+    return
+  }  
+}
+else
+  savecounts<- "FALSE"
+
+if ("countmatrix" %in% names(args)){
+  countmatrix <- args$countmatrix
+  if ((countmatrix != TRUE) && (countmatrix != FALSE)){
+    warning("Error: countmatrix must be TRUE or FALSE, default FALSE")
+    return
+  }  
+}
+else
+  countmatrix <- "FALSE"
+
 
 # as we build the package for reading a complete excel sheet we must build one data.frame to compute singel frames
 if (("actions" %in% names(args)) &  ("items" %in% names(args))) 
@@ -32,20 +65,30 @@ if (("actions" %in% names(args)) &  ("items" %in% names(args)))
   data_sheet = data_temp  # compute with the complete frame
 
 }
-results <- search.win.lose(data_sheet,bits=bytes)
-win_lose_results <- results$data.win.lose
-items <- results$items    
-
 if ("vcolors" %in% names(args))
-    vcolors <- args$vcolors
-    else
-    vcolors <-""
+  vcolors <- args$vcolors
+else
+  vcolors <-""
+
+if  (countmatrix == FALSE){
+  
+ results <- search.win.lose(data_sheet,bits=bytes)
+ win_lose_results <- results$data.win.lose
+ items <- results$items    
+
  if (max(data_sheet$item.number,na.rm=TRUE) < length(vcolors))
            {
-                    print("Error max count of colors does not match")
+                    warning("Error max count of colors does not match")
               break;
       }
-  
+#----------------------------------------------------------------------------------
+#
+#
+#TODO pruefen ob die Anzal der Tiere mit der laenge des namensvektors uebereinstimmt
+#
+#
+#----------------------------------------------------------------------------------
+
   # Create Data matrix
   ADI_Rownames =c(1:items+3)
   ADI_Rownames[1:items] = as.vector(data_sheet$Name[1:items])
@@ -62,7 +105,18 @@ if ("vcolors" %in% names(args))
   tempdata[as.integer(win_lose_results$wins[I]),as.integer(win_lose_results$loses[I])] <-  
   tempdata[as.integer(win_lose_results$wins[I]),as.integer(win_lose_results$loses[I])]+ 1
   }
-   
+}  #if  (countmatrix == FALSE)
+else
+{
+  tempdata <- data_sheet
+  items =length(tempdata[,1])
+  ADI_Rownames =c(1:items+3)
+  ADI_Rownames[1:items] = rownames(data_sheet)
+  ADI_Rownames[items+1] = "results.ADI"
+  ADI_Rownames[items+2] = "id"
+  ADI_Rownames[items+3] = "rank" 
+  
+}
    tempdata 
   result.data <- matrix(0,nrow=items,ncol=items+2,   #Items + ADI + RAnge
         dimnames = list(ADI_Rownames[1:items],ADI_Rownames[1:(items+2)]))
@@ -127,6 +181,27 @@ result.data <- as.matrix(test2)
 
 #     result.data <- result.data[order(result.data_sheet$results.ADI) , ] 
 #----------------------------------------------------------------------
+
+if ((exists("wb") )  && (exists("sheet_new"))) {
+  createSheet(wb, name = sheet_new)
+  writeWorksheet(wb,result.data,sheet=sheet_new,rownames="Row Names")
+  if(savecounts ==TRUE){
+    createSheet(wb, name = sheet_new_counts)
+    writeWorksheet(wb,tempdata[,1:items],sheet=sheet_new_counts,rownames="Row Names") 
+    
+  }
+  saveWorkbook(wb)
+  #delete warnings until Problem 
+  #1: In names(res)[1] <- colname :
+  #  number of items to replace is not a multiple of replacement length
+  # when adding rowmanes with writeWorksheet is solved
+  assign("last.warning", NULL, envir = baseenv())  
+  
+  
+}
+#else
+#  print('Remarks: No changes to excel sheet: missing wb or sheet')
+
    return(list("ADI"=result.data,"Colors"=vcolors2,"ADI_count_matrix"=tempdata[,1:items]))
 
 rm(test2)

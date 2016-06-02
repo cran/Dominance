@@ -59,7 +59,7 @@ data_sheet$Time=format(data_sheet$Time, "%H:%M:%S")
 		max_items <- max(data_sheet$action.to,na.rm=TRUE)
       if (max(data_sheet$item.number,na.rm=TRUE) < max_items)
 	{
-		print(paste("Error max count of items: ",max(data_sheet$action.from),   " does not match max Items: ", ,max(data_sheet$item.number,na.rm=TRUE)))
+		warning(paste("Error max count of items: ",max(data_sheet$action.from),   " does not match max Items: ", ,max(data_sheet$item.number,na.rm=TRUE)))
 	      break;                                                   
   }
 if ("sort_dominance" %in% names(args))
@@ -152,7 +152,7 @@ if ("action_colors" %in% names(args))
   		if (length(args$action_colors) != max_actions)
   		{	
 
-   		print(paste("Error max count of action.number: ", max(data_sheet$action.number,na.rm=TRUE)," does not max colors: ",length(args$action_colors)))
+   		warning(paste("Error max count of action.number: ", max(data_sheet$action.number,na.rm=TRUE)," does not max colors: ",length(args$action_colors)))
   		      break;
   	 	} # if
      action_color <- args$action_colors
@@ -167,7 +167,7 @@ if ("user_colors" %in% names(args))
 { 
     if (length(args$user_colors) < max_items )
     {
-    		print(paste("Error max count of items: ",max_items, "does not max colors:",length(args$user_colors)))
+    		warning(paste("Error max count of items: ",max_items, "does not max colors:",length(args$user_colors)))
 	      break;                                                   
     }
      cl <- args$user_colors
@@ -184,19 +184,19 @@ if ("user_colors" %in% names(args))
 
 if (("paired" %in% names(args)) & !("color_bits" %in% names(args)))
 		{
-			print("Error: paired needs additional color_bits ")
+			warning("Error: paired needs additional color_bits ")
 		      break;
 		}
 if ("paired" %in% names(args))
   if (!(is.data.frame(args$paired)) & (length(args$paired[1,])!= 2))
 		{
-			print("Error: paired must be a data.frame with two rows ")
+			warning("Error: paired must be a data.frame with two rows ")
 		      break;
 		}
 
 if (("color_bits" %in% names(args)) & !("action_colors" %in% names(args)))
 		{
-			print("Error: color_bits needs additional  action_colors ")
+			warning("Error: color_bits needs additional  action_colors ")
 		      break;
 		}
 
@@ -213,7 +213,7 @@ if ("color_bits" %in% names(args))
 		if (length_bits != max_items)
 			# Nr. of its == 1 + Nr. of show_items = 0
 		{
-			print(paste("Error: max count of items:" ,max_items," does not length of color_bits:",length_bits))
+			warning(paste("Error: max count of items:" ,max_items," does not length of color_bits:",length_bits))
 		      break;
 		}
       }
@@ -231,7 +231,7 @@ if ("color_bits" %in% names(args))
 		if (length_bits != max_items)
 			# Nr. of its == 1 + Nr. of show_items = 0
 		{
-			print(paste("Error: ax count of items: ",max_items," does not length of show_items: ",length_bits))
+			warning(paste("Error: ax count of items: ",max_items," does not length of show_items: ",length_bits))
 		      break;
 		}
       }

@@ -22,7 +22,7 @@ if ("count_all" %in% names(args))
 		    max_items <- max(data_sheet$action.to,na.rm=TRUE)
     if (max(data_sheet$item.number,na.rm=TRUE) < max_items)
 	   {
-		    print("Error max count of items does not match")
+		    warning("Error max count of items does not match")
 	      break;
       }
     max_items <-  max(data_sheet$item.number,na.rm=TRUE)       # because some items may not be used in actions
@@ -42,7 +42,7 @@ if ("count_all" %in% names(args))
 		if (length_bits !=  max_actions )
 			# Nr. of its == 1 + Nr. of bits = 0
 		{
-			print("Error: max count of actions does not length of bits")
+			warning("Error: max count of actions does not length of bits")
 		      break;
 		}
       }
@@ -112,8 +112,10 @@ if ("weighting" %in% names(args))
               }  
              } 
 
-             if (data_sheet$classification[x] > 2)
-             break("error  Data_temp$classification > 2 not defined")
+             if (data_sheet$classification[x] > 2){
+             warning("error  Data_temp$classification > 2 not defined")
+               break()
+             }
             } #  for (x in 1:max(Data_temp$action.number,na.rm=TRUE) )          
                                           
       win_lose <- data.frame("wins"=temp_lose,"loses"=temp_win)

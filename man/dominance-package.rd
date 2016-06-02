@@ -25,7 +25,7 @@ The following are sources of information on \pkg{Dominance} package:
 }
 
 \author{
-Knut Krueger
+Knut Krueger , Konstanze Krueger
 
 Maintainer: Who to complain to <Knut.Krueger@equine-science.de>
 
