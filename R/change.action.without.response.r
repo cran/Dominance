@@ -1,3 +1,4 @@
+#'@export change.action.without.response
 change.action.without.response <-
   function(data.set,action,response,newaction, ...)
   {
@@ -49,8 +50,7 @@ change.action.without.response <-
       max_items <- max(data.set$action.to,na.rm=TRUE)
     if (max(data.set$item.number,na.rm=TRUE) < max_items)
     {
-      warning("Error max count of items does not match")
-      break;
+      stop('Error: max count of items does not match max item.numbers')
     }
     max_items <-  max(data.set$item.number,na.rm=TRUE)       # because some items may not be used in actions
     

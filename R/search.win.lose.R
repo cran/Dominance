@@ -1,3 +1,4 @@
+#'@export search.win.lose
 search.win.lose <-
 function(data_sheet, ...)
 {
@@ -22,8 +23,8 @@ if ("count_all" %in% names(args))
 		    max_items <- max(data_sheet$action.to,na.rm=TRUE)
     if (max(data_sheet$item.number,na.rm=TRUE) < max_items)
 	   {
-		    warning("Error max count of items does not match")
-	      break;
+		    stop("Error max count of items does not match")
+	      
       }
     max_items <-  max(data_sheet$item.number,na.rm=TRUE)       # because some items may not be used in actions
 
@@ -42,8 +43,8 @@ if ("count_all" %in% names(args))
 		if (length_bits !=  max_actions )
 			# Nr. of its == 1 + Nr. of bits = 0
 		{
-			warning("Error: max count of actions does not length of bits")
-		      break;
+			stop("Error: max count of actions does not length of bits")
+		      
 		}
       }
 
@@ -51,8 +52,8 @@ if ("weighting" %in% names(args))
     {
       if (length(args$weighting) != max(data_sheet$action.number,na.rm=TRUE))
        { 
-        print(" length(weigting) !=  max(data_sheet$action.number)")
-        break;
+        stop(" length(weigting) !=  max(data_sheet$action.number)")
+        
         } 
        weighting_internal <- args$weighting
      } else  
@@ -113,8 +114,8 @@ if ("weighting" %in% names(args))
              } 
 
              if (data_sheet$classification[x] > 2){
-             warning("error  Data_temp$classification > 2 not defined")
-               break()
+             stop("error  Data_temp$classification > 2 not defined")
+               
              }
             } #  for (x in 1:max(Data_temp$action.number,na.rm=TRUE) )          
                                           

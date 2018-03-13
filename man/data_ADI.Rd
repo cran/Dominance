@@ -2,10 +2,10 @@
 \alias{data_ADI}
 \docType{data}
 \title{
-Demodata for ADI
+Demodata for ADI and FDI
 }
 \description{
-Demodata to calculate an ADI
+Demodata to calculate an ADI and FDI
 }
 \usage{data(data_ADI)}
 \format{

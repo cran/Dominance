@@ -18,6 +18,7 @@ The following are sources of information on \pkg{Dominance} package:
   \cr
   Some help files \cr 
   \code{\link{ADI}}\cr
+  \code{\link{FDI}}\cr
   \code{\link{Sociogram}}\cr
   \code{\link{Musicnotation}}\cr
   \cr

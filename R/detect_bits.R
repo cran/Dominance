@@ -9,7 +9,7 @@ if (all_bits ==FALSE)
 	print("errror in detect_bits: variable bits must contain only \"0\" and \"1\"",quote=FALSE)
 		{
 		 return(all_bits)
-		 break;
+		 stop("errror in detect_bits: variable bits must contain only \"0\" and \"1\"")
 		}
 	}#end if
 

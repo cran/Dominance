@@ -1,3 +1,71 @@
+#' Function musicnotation
+#' 
+#' @name musicnotation
+#' @description A function to visualize interaction wit a musicnotation graph.
+#' @param data_sheet	 \bold{either} a data.frame f.e imported from a data sheet containing\cr  
+#' "Name","item.number"\cr
+#' "action.from.","action.to","kind.of.action"\cr
+#' "name.of.action","action.number","classification","weighting"\cr
+#' \cr
+#' \bold{or} only "action.from.","action.to","kind.of.action"if exists actions and items\cr
+#' \cr
+#' actions: with  "name.of.action","action.number","classification","weighting\cr 
+#' items:  with "Name","item.number"\cr 
+#' Setting a behaviour to 2 means it is count double\cr
+#' 
+#' @param \dots \bold{Additional parameters:}
+#'  \describe{
+#'   \item{\bold{colors}}{a factor of colors as much as actions}
+#'   \item{\bold{lwd}}{line width if lwd_arrows is not used also for line width arrows}
+#' # TODO check this it not working -> no show_items all items will be shown
+#'   \item{\bold{show_items}}{items to be shown}
+#'   \item{\bold{angel_arrows}}{The angel aof the arrow head default 20}
+#'   \item{\bold{length_arrows}}{the lenght of the arrow default 0.05}
+#'   \item{\bold{lwd_arrows}}{the line width of the arrows default 1}
+#'   \item{\bold{actions_colors}}{a vector of colors for actions f.e to show one special action}
+#'   \item{\bold{starting_time}}{builds the graph with data bewteen starting and ending time}
+#'   \item{\bold{ending_time}}{builds the graph with data bewteen starting and ending time}
+#'   \item{\bold{user_colors}}{a vector of colors as much as items to show differetn colors for items}
+#'   \item{\bold{color_bits}}{a vector of colors as much as items 1 shows the horse colored 0 in black (defined with actions_colors)}
+#' }
+#' 
+#' @return returns a list with\cr
+#'ADI - the Average Dominance index\cr
+#' @author Knut Krueger, \email{Knut.Krueger@equine-science.de}
+#' @references {
+#' #Chase, I. D. (2006). Music notation: a new method for visualizing social interaction in animals and humans. Front Zool, 3, 18. 
+#' \url{http://dx.doi.org/10.1186\%2F1742-9994-3-18}\cr
+#' }
+#' 
+#' @examples { #you can eihter use:
+#' data_sheet=data.frame   ("action.from"=c(1,4,2,3,4,3,4,3,4,3,4,3,4,3,4),
+#'                          "action.to"=c(4,1,1,4,3,4,3,4,3,4,3,4,3,4,3),
+#'                          "kind.of.action"= c(4,1,1,4,3,4,3,4,3,4,3,4,3,4,3),
+#'                          "Time"=c('03:15:00','03:17:30','03:20:00','03:20:30','03:21:00',
+#'                                   '03:21:30','03:22:00','03:22:30','03:23:00','03:23:30',
+#'                                   '03:25:00','03:25:30','03:26:00','03:26:30','03:27:00'),
+#'                          stringsAsFactors=FALSE)
+#' items= data.frame ("Name"=c("item1","item2","item3","item4","item5","item6") ,
+#'                    "item.number"=c(1:6),stringsAsFactors=FALSE)
+#' actions=data.frame("name.of.action"= c("leading","following","approach","bite","threat to bite",
+#'                                       "kick","threat to kick", "chase","retreat"),
+#'                   "action.number"=c(1:9),
+#'                   "classification"=c(1,2,1,1,1,1,1,1,2) ,
+#'                   "weighting"=c(1,-1,1,1,1,1,1,1,-1),stringsAsFactors=FALSE)
+#' # set colors for special encounters
+#' color= c("green","green","red","red","red","red","red","red")    
+#' 
+#' Musicnotation(data_sheet=data_sheet,actions=actions,items=items,sort_dominance=TRUE)
+#' #or you can use a complete f.e Excel sheet
+#' #you can save this data as basic excel sheet to work with
+#' data(data_Musicnotation)
+#' Musicnotation(data_sheet=data_Musicnotation,sort_dominance=TRUE) }
+#' @export Musicnotation
+#' @importFrom XLConnect createSheet writeWorksheet saveWorkbook
+#' @importFrom grDevices rainbow
+#' @importFrom chron times
+#' @importFrom graphics plot par text lines title arrows
+
 Musicnotation <-
 function(data_sheet, ...)
 {
@@ -59,8 +127,8 @@ data_sheet$Time=format(data_sheet$Time, "%H:%M:%S")
 		max_items <- max(data_sheet$action.to,na.rm=TRUE)
       if (max(data_sheet$item.number,na.rm=TRUE) < max_items)
 	{
-		warning(paste("Error max count of items: ",max(data_sheet$action.from),   " does not match max Items: ", ,max(data_sheet$item.number,na.rm=TRUE)))
-	      break;                                                   
+		stop(paste("Error max count of items: ",max(data_sheet$action.from),   " does not match max Items: ", ,max(data_sheet$item.number,na.rm=TRUE)))
+	                                              
   }
 if ("sort_dominance" %in% names(args))
 { sort_dominance <- args$sort_dominance  
@@ -152,8 +220,8 @@ if ("action_colors" %in% names(args))
   		if (length(args$action_colors) != max_actions)
   		{	
 
-   		warning(paste("Error max count of action.number: ", max(data_sheet$action.number,na.rm=TRUE)," does not max colors: ",length(args$action_colors)))
-  		      break;
+   		stop(paste("Error max count of action.number: ", max(data_sheet$action.number,na.rm=TRUE)," does not max colors: ",length(args$action_colors)))
+  		      
   	 	} # if
      action_color <- args$action_colors
      change_action_color = TRUE
@@ -167,8 +235,8 @@ if ("user_colors" %in% names(args))
 { 
     if (length(args$user_colors) < max_items )
     {
-    		warning(paste("Error max count of items: ",max_items, "does not max colors:",length(args$user_colors)))
-	      break;                                                   
+    		stop(paste("Error max count of items: ",max_items, "does not max colors:",length(args$user_colors)))
+	                                                      
     }
      cl <- args$user_colors
 } else
@@ -184,20 +252,20 @@ if ("user_colors" %in% names(args))
 
 if (("paired" %in% names(args)) & !("color_bits" %in% names(args)))
 		{
-			warning("Error: paired needs additional color_bits ")
-		      break;
+			stop("Error: paired needs additional color_bits ")
+		      
 		}
 if ("paired" %in% names(args))
   if (!(is.data.frame(args$paired)) & (length(args$paired[1,])!= 2))
 		{
-			warning("Error: paired must be a data.frame with two rows ")
-		      break;
+			stop("Error: paired must be a data.frame with two rows ")
+		      
 		}
 
 if (("color_bits" %in% names(args)) & !("action_colors" %in% names(args)))
 		{
-			warning("Error: color_bits needs additional  action_colors ")
-		      break;
+			stop("Error: color_bits needs additional  action_colors ")
+		    
 		}
 
 if ("color_bits" %in% names(args))
@@ -213,8 +281,8 @@ if ("color_bits" %in% names(args))
 		if (length_bits != max_items)
 			# Nr. of its == 1 + Nr. of show_items = 0
 		{
-			warning(paste("Error: max count of items:" ,max_items," does not length of color_bits:",length_bits))
-		      break;
+			stop(paste("Error: max count of items:" ,max_items," does not length of color_bits:",length_bits))
+		      
 		}
       }
 # -------- end checking whether show_items is in a proper format
@@ -231,8 +299,8 @@ if ("color_bits" %in% names(args))
 		if (length_bits != max_items)
 			# Nr. of its == 1 + Nr. of show_items = 0
 		{
-			warning(paste("Error: ax count of items: ",max_items," does not length of show_items: ",length_bits))
-		      break;
+			stop(paste("Error: ax count of items: ",max_items," does not length of show_items: ",length_bits))
+		      
 		}
       }
 # -------- end checking whether show_items is in a proper format
