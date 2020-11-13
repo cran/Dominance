@@ -84,5 +84,6 @@ Sociogram(data_Network_1,bytes)
 \author{
 Knut Krueger, \email{Knut.Krueger@equine-science.de}
 }
-\keyword{~kwd1}
-\keyword{~kwd2}
+\keyword{~Graphs}
+\keyword{~Network}
+\keyword{~Social}

@@ -69,9 +69,9 @@ ADI(data_ADI,bytes)
 \references{
 {
 The Construction of Dominance Order: Comparing Performance of Five Methods Using an Individual-Based Model C. K. Hemelrijk, J. Wantia and L. Gygax, Behaviour Vol. 142, No. 8 (Aug., 2005), pp. 1037-1058
-\url{http://www.jstor.org/stable/4536286}\cr
+\url{https://www.jstor.org/stable/4536286}\cr
 On using the DomWorld model to evaluate dominance ranking methods , de Vries, Han,  Behaviour, Volume 146, Number 6, 2009 , pp. 843-869(27)
-\url{http://dx.doi.org/10.1163/156853909X412241}
+\url{https://dx.doi.org/10.1163/156853909X412241}
 }
 }
 \author{

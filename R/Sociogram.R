@@ -50,7 +50,7 @@
 #' \item{counts_circles }{vector of min #' and max line size} the last for are helpful to change circle size and #' linewidth
 
 #' @author Knut Krueger, \email{Knut.Krueger@equine-science.de}
-#' @keywords ~kwd1 ~kwd2
+#' @keywords ~Social ~Network ~Graphs
 #' @examples {
 #' ## you can eihter use:
 #' data_sheet=data.frame   ("action.from"=c(1,4,2,3,4,3,4,3,4,3,4,3,4,3,4),
