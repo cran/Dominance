@@ -28,7 +28,7 @@ disabled action is set to 0}
 
 \item{...}{Postscript: FALSE (default) or path to PS output file
 
-soziogram_layout:
+sociogram_layout:
 layout.auto,layout.random,layout.circle,layout.sphere,layout.fruchterman.reingold,layout.kamada.kawai,layout.spring,layout.reingold.tilford,layout.fruchterman.reingold.grid,layout.lgl,layout.graphopt,layout.svd,layout.norm
 
 curved: how much the lines between the nodes ar curved 0 ist stright,
@@ -49,7 +49,7 @@ tkplot: interactiv tkplot, default = true}
 }
 \value{
 \item{sociogram}{ the igraph object} 
-\item{counts_circles }{the count of cirles} 
+\item{counts_circles }{the count of circles} 
 \item{count_interactions }{the count of interactions}
 \item{line_size}{the used linesize} 
 \item{counts_circles }{vector of min #' and max line size} the last for are helpful to change circle size and #' linewidth

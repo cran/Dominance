@@ -8,12 +8,6 @@
 #' @param newaction  newaction must be: data.frame("name.of.action"="test","action.number"=1,"classification"=2,"weighting"=3)\cr
 #' or "change.only" if action is present and row kind.of.action should be changed'
 #' @param response the number of the action responing to param action
-#' @param \dots Additional parameters:
-#'  \describe{
-#'   \item{\bold{workbook}}{the XlConnect Workbook for the Excel file to be changed\cr
-#' note: The workbook must be opened before}
-#'   \item{\bold{sheet}}{the sheet name ( data will be added to be sure not to delete any data}
-#'  }  
 
 #' @return the changed data.set
 #' 
@@ -23,18 +17,10 @@
 #'@export change.action.without.response
 #'
 change.action.without.response <-
-  function(data.set,action,response,newaction, ...)
+  function(data.set,action,response,newaction)
   {
-    args = list(...)
     
-    if ("workbook" %in% names(args))
-    {
-      wb <- args$workbook
-          }
-    
-    if ("sheet" %in% names(args)) 
-      sheet_new <- paste(args$sheet,format(Sys.time(), "%H%M%S"),sep="-")
-    
+
     if (length(newaction) < 4)   {
       if (newaction != "change.only") {
         
@@ -85,14 +71,6 @@ change.action.without.response <-
     }
     if ((data.set$kind.of.action[x+1] ==action) & (x == count_max)) #if last entry is kind of action
       data.set$kind.of.action[x+1] = newaction$action.number
-    
-    if ((exists("wb") )  && (exists("sheet_new"))) {
-      createSheet(wb, name = sheet_new)
-      writeWorksheet(wb,data.set,sheet=sheet_new)
-      saveWorkbook(wb)
-      
-    }
-#    else
-#      print('no changes to excel sheet: missing wb or sheet')
+
     return(data.set)
   }

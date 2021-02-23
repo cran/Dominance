@@ -1,8 +1,8 @@
-#' Function musicnotation
+#' Function Musicnotation
 #' 
-#' @name musicnotation
+#' @name Musicnotation
 #' @description A function to visualize interaction wit a musicnotation graph.
-#' @param data_sheet	 \bold{either} a data.frame f.e imported from a data sheet containing\cr  
+##' @param  data_sheet	 \bold{either} a data.frame f.e imported from a data sheet containing\cr  
 #' "Name","item.number"\cr
 #' "action.from.","action.to","kind.of.action"\cr
 #' "name.of.action","action.number","classification","weighting"\cr
@@ -20,21 +20,21 @@
 #' # TODO check this it not working -> no show_items all items will be shown
 #'   \item{\bold{show_items}}{items to be shown}
 #'   \item{\bold{angel_arrows}}{The angel aof the arrow head default 20}
-#'   \item{\bold{length_arrows}}{the lenght of the arrow default 0.05}
+#'   \item{\bold{length_arrows}}{the length of the arrow default 0.05}
 #'   \item{\bold{lwd_arrows}}{the line width of the arrows default 1}
 #'   \item{\bold{actions_colors}}{a vector of colors for actions f.e to show one special action}
-#'   \item{\bold{starting_time}}{builds the graph with data bewteen starting and ending time}
-#'   \item{\bold{ending_time}}{builds the graph with data bewteen starting and ending time}
-#'   \item{\bold{user_colors}}{a vector of colors as much as items to show differetn colors for items}
+#'   \item{\bold{starting_time}}{builds the graph with data between starting and ending time}
+#'   \item{\bold{ending_time}}{builds the graph with data between starting and ending time}
+#'   \item{\bold{user_colors}}{a vector of colors as much as items to show different colors for items}
 #'   \item{\bold{color_bits}}{a vector of colors as much as items 1 shows the horse colored 0 in black (defined with actions_colors)}
 #' }
-#' 
+#' #' 
 #' @return returns a list with\cr
 #'ADI - the Average Dominance index\cr
 #' @author Knut Krueger, \email{Knut.Krueger@equine-science.de}
 #' @references {
-#' #Chase, I. D. (2006). Music notation: a new method for visualizing social interaction in animals and humans. Front Zool, 3, 18. 
-#' \url{http://dx.doi.org/10.1186\%2F1742-9994-3-18}\cr
+#' Chase, I. D. (2006). Music notation: a new method for visualizing social interaction in animals and humans. Front Zool, 3, 18.
+#'  \doi{10.1186/1742-9994-3-18}
 #' }
 #' 
 #' @examples { #you can eihter use:
@@ -61,7 +61,6 @@
 #' data(data_Musicnotation)
 #' Musicnotation(data_sheet=data_Musicnotation,sort_dominance=TRUE) }
 #' @export Musicnotation
-#' @importFrom XLConnect createSheet writeWorksheet saveWorkbook
 #' @importFrom grDevices rainbow
 #' @importFrom chron times
 #' @importFrom graphics plot par text lines title arrows

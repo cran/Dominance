@@ -22,7 +22,7 @@
 #' disabled action is set to 0
 #' @param ...  Postscript: FALSE (default) or path to PS output file
 #' 
-#' soziogram_layout:
+#' sociogram_layout:
 #' layout.auto,layout.random,layout.circle,layout.sphere,layout.fruchterman.reingold,layout.kamada.kawai,layout.spring,layout.reingold.tilford,layout.fruchterman.reingold.grid,layout.lgl,layout.graphopt,layout.svd,layout.norm
 #' 
 #' curved: how much the lines between the nodes ar curved 0 ist stright,
@@ -44,7 +44,7 @@
 #' @return
 #' 
 #' \item{sociogram}{ the igraph object} 
-#' \item{counts_circles }{the count of cirles} 
+#' \item{counts_circles }{the count of circles} 
 #' \item{count_interactions }{the count of interactions}
 #' \item{line_size}{the used linesize} 
 #' \item{counts_circles }{vector of min #' and max line size} the last for are helpful to change circle size and #' linewidth
@@ -127,10 +127,10 @@ if ("Postscript" %in% names(args))
 }else
 {  Postscript = FALSE }
   
-if ("soziogram_layout" %in% names(args))
-{ soziogram_layout = args$soziogram_layout 
+if ("sociogram_layout" %in% names(args))
+{ sociogram_layout = args$sociogram_layout 
 }else
-{  soziogram_layout = layout.kamada.kawai }
+{  sociogram_layout = layout.kamada.kawai }
 
 if ("curved" %in% names(args))
 { curved = args$curved 
@@ -330,7 +330,7 @@ Postscript = FALSE
 }
 
 
-plot.igraph(g,layout=soziogram_layout, vertex.label.font=4, margin =0)
+plot.igraph(g,layout=sociogram_layout, vertex.label.font=4, margin =0)
 
 if (Postscript == TRUE) {
   dev.off()

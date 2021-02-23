@@ -1,0 +1,51 @@
+citHeader("Data (c) Australian Government Bureau of Meteorology,\n",
+           "Creative Commons (CC) Attribution 3.0 licence or\n",
+           "Public Access Licence (PAL) as appropriate.\n",
+           "See http://www.bom.gov.au/other/copyright.shtml\n",
+           "\n",
+           "To cite bomrang in publications, please use:")
+
+citEntry(
+  entry = "Article",
+  author = personList(as.person("Adam H Sparks"),
+                      as.person("Mark Padgham"),
+                      as.person("Hugh Parsonage"),
+                      as.person("Keith Pembleton")),
+  title = "{bomrang}: Fetch Australian Government Bureau of Meteorology Weather Data",
+  doi = "10.21105/joss.00411",
+  year = 2017,
+  month = "sep",
+  publisher = "The Open Journal",
+  volume = 2,
+  number = 17,
+  journal = "The Journal of Open Source Software",
+
+  textVersion = paste("Adam H Sparks, Mark Padgham, Hugh Parsonage and Keith Pembleton (2017).",
+        "bomrang: Fetch Australian Government Bureau of Meteorology Weather Data",
+        "The Journal of Open Source Software, 2(17).",
+        "DOI: 10.21105/joss.00411")
+        )
+
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+
+citEntry(
+  entry = "Manual",
+  author = personList(as.person("Adam H. Sparks"),
+                      as.person("Jonathan Carroll"),
+                      as.person("James Goldie"),
+                      as.person("Dean Marchiori"),
+                      as.person("Paul Melloy"),
+                      as.person("Mark Padgham"),
+                      as.person("Hugh Parsonage"),
+                      as.person("Keith Pembleton")),
+  title = "{bomrang}: Australian Government Bureau of Meteorology (BOM) Data Client",
+  year = year,
+  note = note,
+  url = "https://CRAN.R-project.org/package=bomrang",
+
+  textVersion = paste("Adam H. Sparks, Jonathan Carroll, James Goldie, Dean Marchiori, Paul Melloy, Mark Padgham, Hugh Parsonage and Keith Pembleton. (", year, ").",
+  " bomrang:  Australian Government Bureau of Meteorology (BOM) Data Client. ",
+  note, ".",
+  " https://CRAN.R-project.org/package=bomrang", sep = "")
+)

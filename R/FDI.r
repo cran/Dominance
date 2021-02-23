@@ -1,6 +1,6 @@
 #' Function FDI
 #' 
-#' A package to calculate Dominance Indices, print Soical Network Graphs and Music Notation Graphs.
+#' Calculate FDI - the Frequency Based Dominance index.
 #' @name FDI
 #' @param  data_sheet	 \bold{either} a data.frame f.e imported from a data sheet containing\cr  
 #' "Name","item.number"\cr
@@ -16,26 +16,21 @@
 #' @param \dots \bold{Additional parameters:}
 #'  \describe{
 #'   \item{\bold{actions}}{(data.frame) with "name.of.action","action.number","classification","weighting"; Classification 1 if "action.from"" wins; Classification 2 if "action.to" wins}
-#'   \item{\bold{Weigting}}{the factor which should be used to calculate the behavior (1 for "action.from"" wins -1 for "action.to" wins")\cr
+#'   \item{\bold{Weighting}}{the factor which should be used to calculate the behavior (1 for "action.from"" wins -1 for "action.to" wins")\cr
 #' Setting a behaviour to 2 means it is count double}
 #'   \item{\bold{vcolors}}{as much colors as items, colors will returned as sorted FDI colors means color 1 = item rank 1, color 2 = item rank 2, and so on}
-#'   \item{\bold{workbook}}{the XlConnect Workbook for the Excel file to be changed\cr
-#' note: The workbook must be opened before}
-#'   \item{\bold{sheet}}{the sheet name ( FDI will be added to be sure not to delete any data}
-#'   \item{\bold{savecounts}}{if TRUE: save the counts of actions as sheet (availalbe only with workbook}
-#'   \item{\bold{saveFDI}}{if TRUE: save the FDI as sheet (availalbe only with workbook}
 #'  }  
 #' 
 #' @return returns a list with\cr
 #'FDI - the Frequency Based Dominance index\cr
 #'Colors - the colors supported by vcolors sorted by FDI of the items\cr
-#'FDI_count_matrix - the counts from which the FDI was calulated\cr
+#'FDI_count_matrix - the counts from which the FDI was calculated\cr
 #' @author Knut Krueger, \email{Knut.Krueger@equine-science.de}
-#' @references{
+#' @references {
 #' The Construction of Dominance Order: Comparing Performance of Five Methods Using an Individual-Based Model C. K. Hemelrijk, J. Wantia and L. Gygax, Behaviour Vol. 142, No. 8 (Aug., 2005), pp. 1037-1058
-#' \url{https://www.jstor.org/stable/4536286}\cr
+#' \doi{10.1163/156853905774405290}\cr
 #'On using the DomWorld model to evaluate dominance ranking methods , de Vries, Han,  Behaviour, Volume 146, Number 6, 2009 , pp. 843-869(27)
-#'\url{https://dx.doi.org/10.1163/156853909X412241}
+#'\doi{10.1163/156853909X412241}
 #' }
 #' 
 #' @examples { #you can eihter use:
@@ -58,9 +53,8 @@
 #' bytes= "001111111"  
 #' FDI(data_ADI,bytes)
 #'    }
-#' @export FDI
-#' @importFrom gdata rename.vars  
-#' @importFrom XLConnect createSheet writeWorksheet saveWorkbook
+#' @export FDI 
+
 
 
 
@@ -77,35 +71,7 @@ FDI <-
     #--------------------- ?bergabe parameter ----------
     args = list(...)
     
-    if ("workbook" %in% names(args)){
-      wb <- args$workbook
-    }
-    
-    
-    if ("sheet" %in% names(args)) {
-      sheet_new <- paste(args$sheet, "FDI",sep="-")
-      sheet_new_counts <- paste(args$sheet, "counts",sep="-")
-    }
-    
-    if ("savecounts" %in% names(args)){
-      savecounts <- args$savecounts
-      if ((savecounts != TRUE) && (savecounts != FALSE)){
-        warning("Error: savecounts must be TRUE or FALSE, default FALSE")
-        return()
-      }  
-    }
-    else
-      savecounts<- "FALSE"
-    if ("saveFdi" %in% names(args)){
-      savecounts <- args$saveFdi
-      if ((saveFdi != TRUE) && (savecounts != FALSE)){
-        warning("Error: saveFdi must be TRUE or FALSE, default FALSE")
-        return()
-      }  
-    }
-    else
-      saveFdi<- "FALSE"
-    
+
     if ("countmatrix" %in% names(args)){
       countmatrix <- args$countmatrix
       if ((countmatrix != TRUE) && (countmatrix != FALSE)){
@@ -244,7 +210,9 @@ FDI <-
           }
         }
     
-    
+#    if (!requireNamespace("gdata")){ 
+#      stop("gdata not available")
+#    }
     test2 <- rename.vars(test2, colnames(test2),c(rownames(test),colnames(test2[length(colnames(test2))-2]),colnames(test2[length(colnames(test2))-1]),colnames(test2[length(colnames(test2))])),info=FALSE)
     test2[1:items,items+5]= test2[1:items,items+5]= data.frame("rank"=position)
     
@@ -252,29 +220,6 @@ FDI <-
     #--------------------------- end sort matrix    -----------
     
     #----------------------------------------------------------------------
-    
-    if ((exists("wb") )  && (exists("sheet_new"))) {
-      if (saveFdi==TRUE){
-            createSheet(wb, name = sheet_new)
-            writeWorksheet(wb,tempdata,sheet=sheet_new,rownames="Row Names")
-      }      
-      if(savecounts ==TRUE){
-        createSheet(wb, name = sheet_new_counts)
-        writeWorksheet(wb,tempdata[,1:items],sheet=sheet_new_counts,rownames="Row Names") 
-        
-      }
-      saveWorkbook(wb)
-      #delete warnings until Problem 
-      #1: In names(res)[1] <- colname :
-      #  number of items to replace is not a multiple of replacement length
-      # when adding rowmanes with writeWorksheet is solved
-      assign("last.warning", NULL, envir = baseenv())  
-      
-      
-    }
-    #else
-    #  print('Remarks: No changes to excel sheet: missing wb or sheet')
-    
     
     FDI <-  tempdata
     

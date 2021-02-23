@@ -4,7 +4,7 @@
 \alias{change.action.without.response}
 \title{Function change.action.without.response}
 \usage{
-change.action.without.response(data.set, action, response, newaction, ...)
+change.action.without.response(data.set, action, response, newaction)
 }
 \arguments{
 \item{data.set}{A data frame used f.e at ADI or FDI}
@@ -15,13 +15,6 @@ change.action.without.response(data.set, action, response, newaction, ...)
 
 \item{newaction}{newaction must be: data.frame("name.of.action"="test","action.number"=1,"classification"=2,"weighting"=3)\cr
 or "change.only" if action is present and row kind.of.action should be changed'}
-
-\item{\dots}{Additional parameters:
- \describe{
-  \item{\bold{workbook}}{the XlConnect Workbook for the Excel file to be changed\cr
-note: The workbook must be opened before}
-  \item{\bold{sheet}}{the sheet name ( data will be added to be sure not to delete any data}
- }}
 }
 \value{
 the changed data.set
